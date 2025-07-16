@@ -132,8 +132,8 @@ if __name__ == '__main__':
                 print(f"检测到相同参数: {str(e)}")
 
             # 测试
-            train_loader_test = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
-            criterion = nn.NLLLoss().to(args.device)
+            test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
+            criterion = nn.CrossEntropyLoss().to(args.device)
 
             task1_acc_list, task2_acc_list, task1_loss_eval, task2_loss_eval = [], [], [], []
             for client_idx in range(args.num_clients):
@@ -141,13 +141,14 @@ if __name__ == '__main__':
                 client_model.eval()
                 loss1,loss2, total, task1_correct, task2_correct = 0.0, 0.0, 0.0, 0.0,0.0
 
-                for batch_idx, (images, labels) in enumerate(train_loader_test):
+                for batch_idx, (images, labels) in enumerate(test_loader):
                     images, labels[0],labels[1]  = images.to(args.device), labels[0].to(args.device), labels[1].to(args.device)
 
                     # Inference
                     outputs = client_model(images)
                     batch_loss1 = criterion(outputs[0], labels[0])
                     batch_loss2 = criterion(outputs[1], labels[1])
+                    
                     loss1 += batch_loss1.item()
                     loss2 += batch_loss2.item()
 
