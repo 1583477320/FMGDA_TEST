@@ -29,10 +29,10 @@ if __name__ == '__main__':
 
     # 准备原始数据集
     # 不同分类生成一个批次
-    train_dataset = generate_multi_mnist(num_samples=60000)
+    train_dataset = generate_multi_mnist(num_samples=6000)
 
     # 生成测试数据
-    test_dataset = generate_multi_mnist(num_samples=10000, train=False)
+    test_dataset = generate_multi_mnist(num_samples=256, train=False)
 
     # dataset_size = len(train_dataset)
     # train_size = int(dataset_size * 0.8)  # 80% 训练集
@@ -248,7 +248,7 @@ if __name__ == '__main__':
     plt.legend()
     plt.grid(False)
     # 保存图像
-    plt.savefig('/kaggle/working/task2_mulit_loss_curve.png', dpi=300, bbox_inches='tight')
+    plt.savefig('./task2_mulit_loss_curve.png', dpi=300, bbox_inches='tight')
 
     # 绘制test集损失曲线
     fig, ax = plt.subplots()
@@ -281,7 +281,7 @@ if __name__ == '__main__':
     plt.legend()
     plt.grid(False)
     # 保存图像
-    plt.savefig('/kaggle/working/test_task2_mulit_loss_curve.png', dpi=300, bbox_inches='tight')
+    plt.savefig('./test_task2_mulit_loss_curve.png', dpi=300, bbox_inches='tight')
 
     # 绘制test集acc曲线
     fig, ax = plt.subplots()
@@ -314,6 +314,6 @@ if __name__ == '__main__':
     plt.legend()
     plt.grid(False)
     # 保存图像
-    plt.savefig('/kaggle/working/task2_acc_curve.png', dpi=300, bbox_inches='tight')
+    plt.savefig('./task2_acc_curve.png', dpi=300, bbox_inches='tight')
 
     plt.show()
