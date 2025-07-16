@@ -154,12 +154,12 @@ if __name__ == '__main__':
                     # Prediction_task1
                     _, pred_labels = torch.max(outputs[0], 1)
                     task1_pred_labels = pred_labels.view(-1)
-                    task1_correct += torch.sum(torch.eq(task1_pred_labels, labels)).item()
+                    task1_correct += torch.sum(torch.eq(task1_pred_labels, labels[0])).item()
 
                     # Prediction_task2
                     _, pred_labels = torch.max(outputs[1], 1)
                     task2_pred_labels = pred_labels.view(-1)
-                    task2_correct += torch.sum(torch.eq(task2_pred_labels, labels)).item()
+                    task2_correct += torch.sum(torch.eq(task2_pred_labels, labels[1])).item()
 
                     total += len(labels)
 
