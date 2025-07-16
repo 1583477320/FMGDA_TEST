@@ -142,7 +142,7 @@ if __name__ == '__main__':
                 loss1,loss2, total, task1_correct, task2_correct = 0.0, 0.0, 0.0, 0.0,0.0
 
                 for batch_idx, (images, labels) in enumerate(train_loader_test):
-                    images, labels = images.to(args.device), labels.to(args.device)
+                    images, labels[0],labels[1]  = images.to(args.device), labels[0].to(args.device), labels[1].to(args.device)
 
                     # Inference
                     outputs = client_model(images)
