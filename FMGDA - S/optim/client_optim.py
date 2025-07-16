@@ -10,12 +10,12 @@ from collections import defaultdict
 class FMGDA():
     def __init__(self, args, client_model, dataset, global_round):
         self.args = args
-        self.criterion = nn.CrossEntropyLoss()
         self.client_model = client_model
         self.dataset = dataset
         self.args.device = torch.device(
             'cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
         self.global_round = global_round
+        self.criterion = nn.NLLLoss().to(self.args.device)
 
     def get_weighted_loss(
             self,
