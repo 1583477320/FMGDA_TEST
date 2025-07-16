@@ -15,7 +15,7 @@ class FMGDA():
         self.args.device = torch.device(
             'cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
         self.global_round = global_round
-        self.criterion = nn.NLLLoss().to(self.args.device)
+        self.criterion = nn.CrossEntropyLoss().to(self.args.device)
 
     def get_weighted_loss(
             self,
