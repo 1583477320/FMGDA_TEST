@@ -173,7 +173,7 @@ if __name__ == '__main__':
                 task2_acc_list.append(task2_accuracy)
 
             task1_loss_eval_avg = sum(task1_loss_eval)/len(task1_loss_eval)
-            loss_eval['task1']['{}'.format(batch_size)].append(task1_loss_avg)
+            loss_eval['task1']['{}'.format(batch_size)].append(task1_loss_eval_avg)
 
             task2_loss_eval_avg = sum(task2_loss_eval) / len(task2_loss_eval)
             loss_eval['task2']['{}'.format(batch_size)].append(task2_loss_eval_avg)
