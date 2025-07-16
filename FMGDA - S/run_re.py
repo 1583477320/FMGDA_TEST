@@ -146,9 +146,10 @@ if __name__ == '__main__':
 
                     # Inference
                     outputs = client_model(images)
-                    batch_loss = criterion(outputs, labels)
-                    loss1 += batch_loss[0].item()
-                    loss1 += batch_loss[1].item()
+                    batch_loss1 = criterion(outputs[0], labels[0])
+                    batch_loss2 = criterion(outputs[1], labels[1])
+                    loss1 += batch_loss1.item()
+                    loss2 += batch_loss2.item()
 
                     # Prediction_task1
                     _, pred_labels = torch.max(outputs[0], 1)
