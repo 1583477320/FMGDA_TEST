@@ -14,10 +14,10 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-# from tensorflow.keras.datasets import mnist
+from tensorflow.keras.datasets import mnist
 
 # 1. 加载 TensorFlow 的 MNIST 数据
-# (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 
 # 2. 定义与目标相同的预处理流程
 transform = transforms.Compose([
@@ -53,8 +53,8 @@ class CustomMNIST(torch.utils.data.Dataset):
 
 
 # 4. 创建训练集和测试集
-# train_dataset = CustomMNIST(train_images, train_labels, transform=transform)
-# test_dataset = CustomMNIST(test_images, test_labels, transform=transform)
+train_dataset = CustomMNIST(train_images, train_labels, transform=transform)
+test_dataset = CustomMNIST(test_images, test_labels, transform=transform)
 
 '''
 数据生成，将mnist数据拼接
@@ -66,27 +66,27 @@ def CompositeDataset(output_dir="./multi_mnist_data", num_samples=60000,train=Tr
     if not os.path.exists(output_dir) and save_images is True:
         os.makedirs(output_dir)
 
-    # if train is True:
-    #     # 加载 MNIST 数据集
-    #     mnist = train_dataset
-    # else:
-    #     mnist = test_dataset
+    if train is True:
+        # 加载 MNIST 数据集
+        mnist = train_dataset
+    else:
+        mnist = test_dataset
     # 加载 MNIST 数据集
-    mnist = datasets.MNIST(
-        root=r'C:\Users\15834\PycharmProjects\FMGDA\FMGDA\Mnist',
-        train=train,
-        download=False,
-        transform=transforms.Compose([
-            transforms.ToTensor(),  # 转换为张量 [0,1] 范围
-            # transforms.ToPILImage(),  # 将 numpy 数组转换为 PIL 图像
-            transforms.Pad(4, fill=0, padding_mode='constant'),  # 填充为 36x36
-            transforms.RandomRotation(10),  # 随机旋转±10度
-            transforms.RandomAffine(0, shear=10),  # 随机仿射变换
-            transforms.ColorJitter(brightness=0.2, contrast=0.2),  # 颜色抖动
-            transforms.RandomHorizontalFlip(),  # 随机水平翻转
-            transforms.Normalize((0.1307,), (0.3081,)),  # MNIST 标准归一化
-        ])
-    )
+    # mnist = datasets.MNIST(
+    #     root=r'C:\Users\15834\PycharmProjects\FMGDA\FMGDA\Mnist',
+    #     train=train,
+    #     download=False,
+    #     transform=transforms.Compose([
+    #         transforms.ToTensor(),  # 转换为张量 [0,1] 范围
+    #         # transforms.ToPILImage(),  # 将 numpy 数组转换为 PIL 图像
+    #         transforms.Pad(4, fill=0, padding_mode='constant'),  # 填充为 36x36
+    #         transforms.RandomRotation(10),  # 随机旋转±10度
+    #         transforms.RandomAffine(0, shear=10),  # 随机仿射变换
+    #         transforms.ColorJitter(brightness=0.2, contrast=0.2),  # 颜色抖动
+    #         transforms.RandomHorizontalFlip(),  # 随机水平翻转
+    #         transforms.Normalize((0.1307,), (0.3081,)),  # MNIST 标准归一化
+    #     ])
+    # )
 
     # 将数据集按类别分组
     class_images = {i: [] for i in range(10)}
