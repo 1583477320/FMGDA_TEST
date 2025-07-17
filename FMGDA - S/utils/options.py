@@ -18,8 +18,8 @@ def args_parser():
     parser.add_argument('--batch_size', type=int, default=256, help="batch size: [a,b]")
     parser.add_argument('--local_lr', type=float, default=0.05,help="local_learning rate")
     parser.add_argument('--global_lr', type=float, default=0.1, help="global_learning rate")
-    parser.add_argument("--momentum", type=str, default=0, help="SGD Momentum")
-    parser.add_argument("--weight_decay", type=str, default=0, help="SGD weight_decay")
+    parser.add_argument("--momentum", type=float, default=0, help="SGD Momentum")
+    parser.add_argument("--weight_decay", type=float, default=0, help="SGD weight_decay")
     parser.add_argument('--beta', type=float, default=0.5, help="FMGDA_S beta (default: 0.5)")
     parser.add_argument("--method", type=str, default="fmgda",choices=list(METHODS.keys()), help="MTL weight method")
 
