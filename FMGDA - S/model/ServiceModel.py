@@ -9,16 +9,20 @@ class ServerSharedModel(nn.Module):
             # 第一个卷积块
             nn.Conv2d(1, 32, kernel_size=3, padding=1),
             # nn.BatchNorm2d(32),
-            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU(),
+            # nn.MaxPool2d(kernel_size=2, stride=2),
+            
 
             # 第二个卷积块
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
             # nn.BatchNorm2d(64),
-            nn.Dropout(0.3),
-            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Dropout(0.25),
 
+            nn.Flatten(),  # 展平特征图
+            nn.Linear(16384, 128),
+            nn.ReLu(),
         )
 
     # 可选：手动初始化参数
