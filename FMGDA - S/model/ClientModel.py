@@ -13,16 +13,16 @@ class ClientMTLModel(nn.Module):
         self.shared_layer = copy.deepcopy(server_model.shared_parameters)
         # 本地任务头
         self.task1_head = nn.Sequential(
-            nn.Flatten(),  # 展平特征图
-            nn.Linear(64 * 9 * 9, 128),
-            nn.ReLU(),
+            # nn.Flatten(),  # 展平特征图
+            # nn.Linear(64 * 9 * 9, 128),
+            # nn.ReLU(),
             # nn.Dropout(),
             nn.Linear(128, 10)
         )  # 任务1
         self.task2_head = nn.Sequential(
-            nn.Flatten(),  # 展平特征图
-            nn.Linear(64 * 9 * 9, 128),
-            nn.ReLU(),
+            # nn.Flatten(),  # 展平特征图
+            # nn.Linear(64 * 9 * 9, 128),
+            # nn.ReLU(),
             # nn.Dropout(),
             nn.Linear(128, 10)
         )  # 任务2
