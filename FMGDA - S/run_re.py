@@ -141,28 +141,29 @@ if __name__ == '__main__':
                 client_model.eval()
                 loss1,loss2, total, task1_correct, task2_correct = 0.0, 0.0, 0.0, 0.0,0.0
 
-                for batch_idx, (images, labels) in enumerate(test_loader):
-                    images, labels[0],labels[1]  = images.to(args.device), labels[0].to(args.device), labels[1].to(args.device)
-
-                    # Inference
-                    outputs = client_model(images)
-                    batch_loss1 = criterion(outputs[0], labels[0])
-                    batch_loss2 = criterion(outputs[1], labels[1])
-                    
-                    loss1 += batch_loss1.item()
-                    loss2 += batch_loss2.item()
-
-                    # Prediction_task1
-                    _, pred_labels = torch.max(outputs[0], 1)
-                    task1_pred_labels = pred_labels.view(-1)
-                    task1_correct += torch.sum(torch.eq(task1_pred_labels, labels[0])).item()
-
-                    # Prediction_task2
-                    _, pred_labels = torch.max(outputs[1], 1)
-                    task2_pred_labels = pred_labels.view(-1)
-                    task2_correct += torch.sum(torch.eq(task2_pred_labels, labels[1])).item()
-
-                    total += len(labels)
+                with torch.no_grad():
+                    for batch_idx, (images, labels) in enumerate(test_loader):
+                        images, labels[0],labels[1]  = images.to(args.device), labels[0].to(args.device), labels[1].to(args.device)
+    
+                        # Inference
+                        outputs = client_model(images)
+                        batch_loss1 = criterion(outputs[0], labels[0])
+                        batch_loss2 = criterion(outputs[1], labels[1])
+                        
+                        loss1 += batch_loss1.item()
+                        loss2 += batch_loss2.item()
+    
+                        # Prediction_task1
+                        _, pred_labels = torch.max(outputs[0], 1)
+                        task1_pred_labels = pred_labels.view(-1)
+                        task1_correct += torch.sum(torch.eq(task1_pred_labels, labels[0])).item()
+    
+                        # Prediction_task2
+                        _, pred_labels = torch.max(outputs[1], 1)
+                        task2_pred_labels = pred_labels.view(-1)
+                        task2_correct += torch.sum(torch.eq(task2_pred_labels, labels[1])).item()
+    
+                        total += len(labels)
 
                 task1_loss_eval.append(loss1)
                 task2_loss_eval.append(loss2)
