@@ -22,7 +22,7 @@ class ServerSharedModel(nn.Module):
 
             nn.Flatten(),  # 展平特征图
             nn.Linear(16384, 128),
-            nn.ReLu(),
+            nn.ReLU(),
         )
 
     # 可选：手动初始化参数
