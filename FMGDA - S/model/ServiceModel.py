@@ -21,7 +21,7 @@ class ServerSharedModel(nn.Module):
             nn.Dropout(0.25),
 
             nn.Flatten(),  # 展平特征图
-            nn.Linear(16384, 128),
+            nn.Linear(20736, 128),
             nn.ReLU(),
         )
 
