@@ -141,7 +141,7 @@ if __name__ == '__main__':
             for client_idx in range(args.num_clients):
                 client_model = clients_model[client_idx]
                 client_model.eval()
-                loss1,loss2, total, task1_correct, task2_correct = 0.0, 0.0, 0.0, 0.0,0.0
+                loss1,loss2, total, correct1, correct2 = 0.0, 0.0, 0.0, 0.0,0.0
 
                 with torch.no_grad():
                     for batch_idx, (images, labels) in enumerate(test_loader):
