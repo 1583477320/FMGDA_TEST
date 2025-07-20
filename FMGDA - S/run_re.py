@@ -161,7 +161,7 @@ if __name__ == '__main__':
             
                         correct1 += preds1.eq(labels0).sum().item()
                         correct2 += preds2.eq(labels1).sum().item()
-                        total += targets1.size(0)
+                        total += labels1.size(0)
 
                 avg_loss1 = loss1 / len(test_loader)
                 avg_loss2 = loss2 / len(test_loader)
