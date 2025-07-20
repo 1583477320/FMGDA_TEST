@@ -29,12 +29,12 @@ if __name__ == '__main__':
 
     # 准备原始数据集
     # 不同分类生成一个批次
-    # train_dataset = generate_multi_mnist(num_samples=60000)
-    train_dataset = train_dataset
+    train_dataset = generate_multi_mnist(num_samples=60000)
+    # train_dataset = train_dataset
 
     # 生成测试数据
-    # test_dataset = generate_multi_mnist(num_samples=10000, train=False)
-    test_dataset = test_dataset
+    test_dataset = generate_multi_mnist(num_samples=10000, train=False)
+    # test_dataset = test_dataset
 
     # dataset_size = len(train_dataset)
     # train_size = int(dataset_size * 0.8)  # 80% 训练集
@@ -50,21 +50,21 @@ if __name__ == '__main__':
 
     # loss_history = {'task1': {'fmgda': [], 'fmgda_s': []}, 'task2': {'fmgda': [], 'fmgda_s': []}}
     # loss_history = {'task1': {'16':[], '64':[], '128': [], '256': []}, 'task2': {'16':[], '64':[], '128': [], '256': []}}
-    loss_history = {'task1': {'256': []}
-                    ,'task2': {'256': []}
+    loss_history = {'task1': {'128':[], '256': []}
+                    ,'task2': {'128':[],'256': []}
                     }
     # loss_eval = {'task1': {'fmgda': [], 'fmgda_s': []}, 'task2': {'fmgda': [], 'fmgda_s': []}}
     # loss_eval = {'task1': {'16':[], '64':[], '128': [], '256': []}, 'task2': {'16':[], '64':[], '128': [], '256': []}}
-    loss_eval = {'task1': {'256': []}
-                 ,'task2': {'256': []}
+    loss_eval = {'task1': {'128':[],'256': []}
+                 ,'task2': {'128':[],'256': []}
                  }
     # acc = {'task1': {'fmgda': [], 'fmgda_s': []}, 'task2': {'fmgda': [], 'fmgda_s': []}}
     # acc = {'task1': {'16':[], '64':[], '128': [], '256': []}, 'task2': {'16':[], '64':[], '128': [], '256': []}}
-    acc = {'task1': {'256': []}
-           ,'task2': {'256': []}
+    acc = {'task1': {'128':[],'256': []}
+           ,'task2': {'128':[],'256': []}
            }
 
-    for batch_size in [256]:
+    for batch_size in [128, 256]:
         # 初始化模型参数
         args.batch_size = batch_size
         server_model = ServerSharedModel()
@@ -223,7 +223,7 @@ if __name__ == '__main__':
     # 绘制训练集损失曲线
     fig, ax = plt.subplots()
     task1_loss = loss_history["task1"]
-    for i in [256]:
+    for i in [128, 256]:
         ax.semilogy(range(len(task1_loss["{}".format(i)])), task1_loss["{}".format(i)], label="{}".format(i))
     ax.spines['left'].set_position('zero')  # Y轴在x=0处
     ax.set_xlim(left=0)  # 只显示x正半轴
@@ -239,7 +239,7 @@ if __name__ == '__main__':
 
     fig, ax = plt.subplots()
     task2_loss = loss_history["task2"]
-    for i in [256]:
+    for i in [128, 256]:
         ax.semilogy(range(len(task2_loss["{}".format(i)])), task2_loss["{}".format(i)], label="{}".format(i))
     ax.spines['left'].set_position('zero')  # Y轴在x=0处
     ax.set_xlim(left=0)  # 只显示x正半轴
@@ -256,7 +256,7 @@ if __name__ == '__main__':
     # 绘制test集损失曲线
     fig, ax = plt.subplots()
     test_task1_loss = loss_eval["task1"]
-    for i in [256]:
+    for i in [128, 256]:
         ax.semilogy(range(len(test_task1_loss["{}".format(i)])), test_task1_loss["{}".format(i)], label="{}".format(i))
     ax.spines['left'].set_position('zero')  # Y轴在x=0处
     ax.set_xlim(left=0)  # 只显示x正半轴
@@ -272,7 +272,7 @@ if __name__ == '__main__':
 
     fig, ax = plt.subplots()
     test_task2_loss = loss_eval["task2"]
-    for i in [256]:
+    for i in [128, 256]:
         ax.semilogy(range(len(test_task2_loss["{}".format(i)])), test_task2_loss["{}".format(i)], label="{}".format(i))
     ax.spines['left'].set_position('zero')  # Y轴在x=0处
     ax.set_xlim(left=0)  # 只显示x正半轴
@@ -289,7 +289,7 @@ if __name__ == '__main__':
     # 绘制test集acc曲线
     fig, ax = plt.subplots()
     task1_acc = acc["task1"]
-    for i in [256]:
+    for i in [128, 256]:
         ax.plot(range(len(task1_acc["{}".format(i)])), task1_acc["{}".format(i)], label="{}".format(i))
     ax.spines['left'].set_position('zero')  # Y轴在x=0处
     ax.set_xlim(left=0)  # 只显示x正半轴
@@ -305,7 +305,7 @@ if __name__ == '__main__':
 
     fig, ax = plt.subplots()
     task2_acc = acc["task2"]
-    for i in [256]:
+    for i in [128, 256]:
         ax.plot(range(len(task2_acc["{}".format(i)])), task2_acc["{}".format(i)], label="{}".format(i))
     ax.spines['left'].set_position('zero')  # Y轴在x=0处
     ax.set_xlim(left=0)  # 只显示x正半轴
