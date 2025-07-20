@@ -44,13 +44,13 @@ class CustomMNIST(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         image = self.images[idx]
-        label1 = self.labels[idx]
-        label2 = label1
+        label = self.labels[idx]
+        # label2 = label1
         
         if self.transform:
             image = self.transform(image)
 
-        return image, (label1, label2)
+        return image, label
 
 
 # 4. 创建训练集和测试集
