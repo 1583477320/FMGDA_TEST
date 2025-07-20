@@ -159,8 +159,8 @@ if __name__ == '__main__':
                         _, preds1 = torch.max(outputs[0], 1)
                         _, preds2 = torch.max(outputs[1], 1)
             
-                        correct1 += preds1.eq(targets1).sum().item()
-                        correct2 += preds2.eq(targets2).sum().item()
+                        correct1 += preds1.eq(labels0).sum().item()
+                        correct2 += preds2.eq(labels1).sum().item()
                         total += targets1.size(0)
 
                 avg_loss1 = loss1 / len(test_loader)
