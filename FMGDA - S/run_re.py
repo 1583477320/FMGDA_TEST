@@ -134,7 +134,7 @@ if __name__ == '__main__':
                 print(f"检测到相同参数: {str(e)}")
 
             # 测试
-            test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
+            test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
             criterion = nn.CrossEntropyLoss().to(args.device)
 
             task1_acc_list, task2_acc_list, task1_loss_eval, task2_loss_eval = [], [], [], []
@@ -145,34 +145,33 @@ if __name__ == '__main__':
 
                 with torch.no_grad():
                     for batch_idx, (images, labels) in enumerate(test_loader):
-                        images, labels[0],labels[1]  = images.to(args.device), labels[0].to(args.device), labels[1].to(args.device)
+                        images, labels0,labels1  = images.to(args.device), labels[0].to(args.device), labels[1].to(args.device)
     
                         # Inference
                         outputs = client_model(images)
-                        batch_loss1 = criterion(outputs[0], labels[0])
-                        batch_loss2 = criterion(outputs[1], labels[1])
+                        batch_loss1 = criterion(outputs[0], labels0)
+                        batch_loss2 = criterion(outputs[1], labels1)
                         
                         loss1 += batch_loss1.item()
                         loss2 += batch_loss2.item()
     
-                        # Prediction_task1
-                        _, pred_labels = torch.max(outputs[0], 1)
-                        task1_pred_labels = pred_labels.view(-1)
-                        task1_correct += torch.sum(torch.eq(task1_pred_labels, labels[0])).item()
-    
-                        # Prediction_task2
-                        _, pred_labels = torch.max(outputs[1], 1)
-                        task2_pred_labels = pred_labels.view(-1)
-                        task2_correct += torch.sum(torch.eq(task2_pred_labels, labels[1])).item()
-    
-                        total += len(labels)
+                        # Prediction
+                        _, preds1 = torch.max(outputs[0], 1)
+                        _, preds2 = torch.max(outputs[1], 1)
+            
+                        correct1 += preds1.eq(targets1).sum().item()
+                        correct2 += preds2.eq(targets2).sum().item()
+                        total += targets1.size(0)
 
-                task1_loss_eval.append(loss1)
-                task2_loss_eval.append(loss2)
+                avg_loss1 = loss1 / len(test_loader)
+                avg_loss2 = loss2 / len(test_loader)
+                task1_accuracy = 100. * correct1 / total
+                task2_accuracy = 100. * correct2 / total
+                
+                task1_loss_eval.append(avg_loss1)
+                task2_loss_eval.append(avg_loss2)
 
-                task1_accuracy = task1_correct / total
                 task1_acc_list.append(task1_accuracy)
-                task2_accuracy = task2_correct / total
                 task2_acc_list.append(task2_accuracy)
 
             task1_loss_eval_avg = sum(task1_loss_eval)/len(task1_loss_eval)
